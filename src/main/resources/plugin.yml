@@ -1,0 +1,8 @@
+name: Hub
+version: 1.0.0
+author: Happy
+main: me.happy.hub.Hub
+commands:
+  rc:
+    description: Reloads the config
+    aliases: [reloadconfig, reloadcm, cr]
