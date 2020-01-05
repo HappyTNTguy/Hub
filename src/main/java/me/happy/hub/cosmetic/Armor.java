@@ -13,27 +13,43 @@ public class Armor {
     private static int r;
     private static int g;
     private static int b = 20;
-    private static int time = 59;
+    private static boolean countdown = false;
     
     public static void makeClockAndChangingTimers() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), () -> {
                 Color c = Color.fromRGB(Armor.r, Armor.g, Armor.b);
-                if(r < 255) {
-                    r += 5;
-                }
-                if (r == 255 && g < 255) {
-                    g += 5;
-                }
+                if (!countdown) {
+                    if (r < 255) {
+                        r += 5;
+                    }
+                    if (r == 255 && g < 255) {
+                        g += 5;
+                    }
 
-                if (r == 255 && g == 255 && b < 255) {
-                    b += 5;
-                }
+                    if (r == 255 && g == 255 && b < 255) {
+                        b += 5;
+                    }
 
-                if (r == 255 & g == 255 && b == 255) {
-                    r = 0;
-                    g = 0;
-                    b = 0;
-                    r+=5;
+                    if (r == 255 & g == 255 && b == 255) {
+                        //r = 0;
+                        //g = 0;
+                        //b = 0;
+                        // r += 5;
+                        countdown = true;
+                    }
+                }else if (countdown) {
+                    if (r > 0) {
+                        r -= 5;
+                    }
+                    if (r == 0 && g > 0) {
+                        g -= 5;
+                    }
+                    if (r == 0 && g == 0 && b > 0) {
+                        b -= 5;
+                    }
+                    if (r == 0 && g == 0 && b == 0)  {
+                        countdown = false;
+                    }
                 }
 
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
