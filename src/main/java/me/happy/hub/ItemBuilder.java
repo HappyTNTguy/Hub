@@ -1,4 +1,4 @@
-package me.happy.hub.util;
+package me.happy.hub;
 
 import java.util.ArrayList;
 import java.util.Arrays;

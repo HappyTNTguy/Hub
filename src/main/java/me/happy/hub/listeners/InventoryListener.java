@@ -3,7 +3,7 @@ package me.happy.hub.listeners;
 import me.happy.hub.Hub;
 import me.happy.hub.cosmetic.CosmeticsInventory;
 import me.happy.hub.inventory.ServerSelector;
-import me.happy.hub.util.ItemBuilder;
+import me.happy.hub.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

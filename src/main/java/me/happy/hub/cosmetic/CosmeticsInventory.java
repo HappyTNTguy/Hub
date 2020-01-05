@@ -1,6 +1,6 @@
 package me.happy.hub.cosmetic;
 
-import me.happy.hub.util.ItemBuilder;
+import me.happy.hub.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

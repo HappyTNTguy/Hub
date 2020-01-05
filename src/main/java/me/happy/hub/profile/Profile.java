@@ -13,6 +13,7 @@ import java.util.UUID;
 @Setter
 public class Profile {
 
+    // FROM WENJAPVP
     private UUID uuid;
     private String name;
 

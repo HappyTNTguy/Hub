@@ -1,24 +1,20 @@
 package me.happy.hub.listeners;
 
 import me.happy.hub.Hub;
-import me.happy.hub.util.ItemBuilder;
+import me.happy.hub.ItemBuilder;
 import org.bukkit.*;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
-import org.bukkit.util.Vector;
 
 public class PlayerListener implements Listener {
 
@@ -35,6 +31,7 @@ public class PlayerListener implements Listener {
         e.getPlayer().getInventory().setBoots(new ItemBuilder(Material.AIR).toItemStack());
         e.getPlayer().updateInventory();
         e.getPlayer().setGameMode(GameMode.SURVIVAL);
+        e.getPlayer().setAllowFlight(true);
 
         e.getPlayer().getInventory().setHeldItemSlot(3);
         ItemStack SELECTOR = new ItemBuilder(Material.COMPASS).setName(ChatColor.GOLD + "Server Selector").toItemStack();
@@ -50,14 +47,16 @@ public class PlayerListener implements Listener {
 
     }
 
+
     @EventHandler
     public void onHurt(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             e.setCancelled(true);
         }
     }
+
     @EventHandler
-    public void onPlayerToggleFlight(PlayerToggleFlightEvent e) { //Double Jump Part 1 Main
+    public void onPlayerToggleFlight(PlayerToggleFlightEvent e) {
         Player player = e.getPlayer();
         if(player.getGameMode() == GameMode.CREATIVE)
             return;
@@ -65,16 +64,26 @@ public class PlayerListener implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setVelocity(player.getLocation().getDirection().multiply(2.5).setY(1));
-        player.getWorld().playSound(player.getLocation(), Sound.BLAZE_HIT, 1.0F, 1.0F);
+        player.setAllowFlight(true);
+        player.playEffect(player.getLocation(), Effect.BLAZE_SHOOT, 15);
     }
 
+    /* UNCOMMENT THIS IF YOU DO NOT WANT INFINITE DOUBLE JUMP
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e) { //Double Jump Part 2
-        Player player = e.getPlayer();
-        if ((player.getGameMode() != GameMode.CREATIVE)
-                && (player.getLocation().subtract(0, 1, 0).getBlock().getType() != Material.AIR)
-                && (!player.isFlying()))
-            player.setAllowFlight(true);
+    public void onHurt(EntityDamageEvent e) {
+        if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            if (e.getEntity() instanceof Player) {
+                Player player = (Player) e.getEntity();
+                player.setAllowFlight(true);
+                e.setCancelled(true);
+            }
+        }
+
+     */
+
+    @EventHandler
+    public void onHungerChange(FoodLevelChangeEvent e) {
+        e.setCancelled(true);
     }
 
     @EventHandler

@@ -16,6 +16,7 @@ import java.util.UUID;
 
 public class ProfileManager implements Listener {
 
+    // FROM WENJAPVP
     private Map<UUID, Profile> profile;
 
     public ProfileManager() {
